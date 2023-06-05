@@ -52,10 +52,6 @@ class User extends Authenticatable
         return $this->hasOne(Seller::class, 'user_id', 'id');
     }
 
-    public function sellerCalifications() {
-        return $this->hasMany(SellerCalification::class, 'seller_id', 'id');
-    }
-
     public function boughtProducts() {
         return $this->hasMany(BoughtProducts::class, 'user_id', 'id');
     }

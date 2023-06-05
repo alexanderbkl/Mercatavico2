@@ -21,8 +21,8 @@ return new class extends Migration
             $table->integer('quantity');
             $table->foreignId('order_id')->constrained('orders');
             $table->foreignId('seller_id')->constrained('users');
-            //create nullable calification_id
-            $table->foreignId('calification_id')->nullable()->constrained('seller_califications');
+            //create nullable calification number
+            $table->integer('calification')->nullable();
             $table->float('price')->nullable();
             $table->timestamps();
         });
@@ -35,7 +35,7 @@ return new class extends Migration
             'order_id' => 1,
             'seller_id' => 2,
             'price' => 10,
-            'calification_id' => null,
+            'calification' => null,
         ]);
     }
 

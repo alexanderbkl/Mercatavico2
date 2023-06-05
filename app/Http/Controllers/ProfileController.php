@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Address;
+use App\Models\BoughtProducts;
 use App\Models\Buyer;
 use App\Models\City;
 use App\Models\Material;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Seller;
-use App\Models\SellerCalifications;
 use App\Models\User;
 use App\Models\UserAddress;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
@@ -80,12 +82,12 @@ class ProfileController extends Controller
             $output = new ConsoleOutput();
             $user->addressUser->city_id = $request->ciudad;
             $user->addressUser->cp = $request->cp;
-            $output->writeln(("fav_pay: ".$request->fav_pay));
-            $output->writeln($user->buyer->fav_pay);
             $user->buyer->fav_pay = $request->fav_pay;
             $user->buyer->shipping_preferences = $request->shipping_preferences;
+            $user->seller->payback = $request->payback;
             $user->addressUser->save();
             $user->buyer->save();
+            $user->seller->save();
         }else{
             //create Address
             Address::create([
@@ -97,6 +99,11 @@ class ProfileController extends Controller
             Buyer::create([
                 'user_id'=>$user->id,
                 'fav_pay'=>$request->fav_pay,
+            ]);
+
+            Seller::create([
+                'user_id'=>$user->id,
+                'payback'=>$request->payback,
             ]);
         }
         $user->save();
@@ -127,29 +134,42 @@ class ProfileController extends Controller
     }
 
     public function addCalification(Request $request) {
-        $validatedData = $request->validate([
-            'seller_id' => 'required',
-            'buyer_id' => 'required',
-            'order_id' => 'required',
-            'calification' => 'required|integer|min:1|max:5',
-        ], [
-            'seller_id.required' => 'ID del vendedor requerido!',
-            'buyer_id.required' => 'ID del comprador requerido...',
-            'order_id.required' => 'Orden requerida...',
-            'calification.required' => 'Calificación requerida',
-        ]);
+        $output = new ConsoleOutput();
 
-        $calification = SellerCalifications::create($validatedData);
+        try {
+            $validatedData = $request->validate([
+                'bought_product_id' => 'required|integer',
+                'calification' => 'required|integer|min:1|max:5',
+                'seller_id' => 'required|integer',
+            ], [
+                'required' => 'The :attribute field is required',
+                'integer' => 'The :attribute field must be an integer',
+                'min' => 'The :attribute field must be at least :min',
+                'max' => 'The :attribute field must be at most :max',
+            ]);
 
-        if ($calification) {
-            $seller = Seller::where('user_id', $validatedData['seller_id'])->first();
-            $averageCalification = $seller->averageCalification();
 
-            $seller->calificate = $averageCalification;
-            $seller->save();
+            if ($validatedData) {
+                DB::transaction(function () use ($validatedData, $output) {
+                    // First update the BoughtProduct
+                    $boughtProduct = BoughtProducts::findOrFail($validatedData['bought_product_id']);
+                    $boughtProduct->calification = $validatedData['calification'];
+                    $boughtProduct->save();
 
-            return response()->json(['message' => 'Calification added successfully'], 200);
-        } else {
+                    // Then calculate the average calification of the seller and update the seller
+                    $seller = Seller::where('user_id', $validatedData['seller_id'])->first();
+                    $averageCalification = $seller->averageCalification();
+                    $seller->calificate = $averageCalification;
+                    $seller->save();
+                });
+
+                return response()->json(['message' => 'Calification added successfully'], 200);
+            } else {
+                $output->writeln("error: failed to add calification (no validated data)");
+                return response()->json(['error' => 'Failed to add calification, no validated data'], 500);
+            }
+        } catch (Exception $e) {
+            $output->writeln($e->getMessage());
             return response()->json(['error' => 'Failed to add calification'], 500);
         }
     }

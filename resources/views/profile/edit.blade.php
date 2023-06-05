@@ -40,7 +40,8 @@
                                             <label for="name">Nombre y apellidos</label>
                                         </div>
                                         <div class="inputform">
-                                            <input type="text" id="name" name="name" placeholder=""
+                                            <input class="form-control text-center" type="text" id="name"
+                                                name="name" placeholder=""
                                                 value="{{ \Illuminate\Support\Facades\Auth::user()->name }}">
                                         </div>
                                         <ul class="errors"></ul>
@@ -50,8 +51,8 @@
                                             <label for="email">Correo</label>
                                         </div>
                                         <div class="inputform">
-                                            <input required type="text" id="email" name="email"
-                                                value="{{ Auth::user()->email }}">
+                                            <input class="form-control" required type="text" id="email"
+                                                name="email" value="{{ Auth::user()->email }}">
                                         </div>
                                         <ul class="errors"></ul>
                                     </div>
@@ -60,18 +61,18 @@
                                             <label for="password">Contraseña</label>
                                         </div>
                                         <div class="inputform">
-                                            <input type="password" id="password" autocomplete="new-password"
-                                                name="password" placeholder=""><br>
+                                            <input class="form-control" type="password" id="password"
+                                                autocomplete="new-password" name="password" placeholder=""><br>
                                             <small>Dejar en blanco para mantener la misma</small>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group d-inline-block">
                                         <div class="labelform">
                                             <label for="password_c">Confirmar contraseña</label>
                                         </div>
                                         <div class="inputform">
-                                            <input type="password" id="password_c" autocomplete="new-password"
-                                                name="password_confirmation"><br>
+                                            <input class="form-control" type="password" id="password_c"
+                                                autocomplete="new-password" name="password_confirmation"><br>
                                             <small>Dejar en blanco para mantener la misma</small>
                                         </div>
                                     </div>
@@ -85,16 +86,18 @@
                                                 <div class="labelform">
                                                     <label for="address">Direccion</label>
                                                 </div>
-                                                <div class="inputform">
-                                                    <input required type="text" id="address" name="address"
+                                                <div class="inputform form-group d-inline-block">
+                                                    <input class="form-control text-center w-auto" required type="text"
+                                                        id="address" name="address"
                                                         value="{{ Auth::user()->addressUser->address }}">
                                                 </div>
                                                 <!--using blade notation, for each ciudad in $ciudades create a select options-->
                                                 <div class="labelform">
                                                     <label for="ciudad">Ciudad</label>
                                                 </div>
-                                                <div class="inputform">
-                                                    <select name="ciudad" id="ciudad">
+                                                <div class="inputform form-group d-inline-block">
+                                                    <select name="ciudad" class="form-control w-auto text-center"
+                                                        id="ciudad">
                                                         @foreach ($ciudades as $ciudad)
                                                             <option value="{{ $ciudad->id }}"
                                                                 @if (Auth::user()->addressUser && Auth::user()->addressUser->city_id == $ciudad->id) selected @endif>
@@ -103,19 +106,21 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="labelform">
+                                                <div class="labelform ">
                                                     <label for="cp">Codigo postal</label>
                                                 </div>
                                                 <!--preferred payment method (paypal, tarjeta)-->
-                                                <div class="inputform">
-                                                    <input required type="text" id="cp" name="cp"
+                                                <div class="inputform d-inline-block form-group">
+                                                    <input class="form-control text-center w-auto" required type="text"
+                                                        id="cp" name="cp"
                                                         value="{{ Auth::user()->addressUser ? Auth::user()->addressUser->cp : '' }}">
                                                 </div>
                                                 <div class="labelForm">
                                                     <label for="payment_method">Método de pago preferido</label>
                                                 </div>
-                                                <div class="inputForm">
-                                                    <select name="fav_pay" id="fav_pay">
+                                                <div class="inputForm  d-inline-block form-group">
+                                                    <select class="form-control text-center w-auto" name="fav_pay"
+                                                        id="fav_pay">
                                                         <option value="1"
                                                             @if (Auth::user()->buyer->fav_pay == 'paypal') selected @endif>PayPal
                                                         </option>
@@ -127,8 +132,9 @@
                                                 <div class="labelForm">
                                                     <label for="payment_method">Horario de entrega preferido</label>
                                                 </div>
-                                                <div class="inputForm">
-                                                    <select name="shipping_preferences" id="shipping_preferences">
+                                                <div class="inputForm d-inline-block form-group">
+                                                    <select class="w-auto  text-center form-control"
+                                                        name="shipping_preferences" id="shipping_preferences">
                                                         <option value="Mañana"
                                                             @if (Auth::user()->buyer->shipping_preferences == 'Mañana') selected @endif>Mañana
                                                         </option>
@@ -136,6 +142,16 @@
                                                             @if (Auth::user()->buyer->shipping_preferences == 'Tarde') selected @endif>Tarde
                                                         </option>
                                                     </select>
+                                                </div>
+                                                <div class="labelForm">
+                                                    <label for="checkbox">Ofrecer servicio de reembolso</label>
+                                                </div>
+                                                <div class="form-check inputForm">
+                                                    <fieldset>
+                                                        <input class="form-check-input" type="checkbox" id="payback"
+                                                            name="payback"
+                                                            @if (Auth::user()->seller->payback == '1') checked @endif>
+                                                    </fieldset>
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -151,6 +167,11 @@
                                     <p>Mis puntos totales acumulados:
                                         <span style="font-size: 20px;font-weight: bold">
                                             {{ \Illuminate\Support\Facades\Auth::user()->seller->cred_total }}
+                                        </span>
+                                    </p>
+                                    <p>Mi puntuación media:
+                                        <span style="font-size: 20px;font-weight: bold">
+                                            {{ \Illuminate\Support\Facades\Auth::user()->seller->calificate }}
                                         </span>
                                     </p>
                                 </div>
@@ -176,6 +197,7 @@
                 <button class="btn btn-primary" data-toggle="modal" data-target="#modalAddProducts">Añadir
                     producto
                 </button>
+                <br><br>
                 <input type="search" class="form-control" placeholder="Buscar productos..." id="search_productos">
                 <div id="contentProductos" class="contenedor_datos">
                     @include('profile._partial_mis_productos', $userProducts)
@@ -244,38 +266,7 @@
                     <h1>Todos mis productos comprados</h1>
                 @endif
                 <div id="contentPedidos" style="margin-top: 50px">
-                    <table class="table" id="tableOrders">
-
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Id orden</th>
-                                <th scope="col">Vendedor</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Calificación</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (count($boughtProducts) > 0)
-                                @foreach ($boughtProducts as $boughtProduct)
-                                    <tr>
-                                        <td>{{ $boughtProduct->order->payment_id }}</td>
-                                        <td>{{ $boughtProduct->seller->name }}</td>
-                                        <td>{{ $boughtProduct->quantity }}</td>
-                                        <td>
-                                            @if ($boughtProduct->calification)
-                                                {{ $boughtProduct->calification->calification }}
-                                            @else
-                                                {!! '<button>Calificar ahora</button>' !!}
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <p>No hay pedidos</p>
-                            @endif
-
-                        </tbody>
-                    </table>
+                    @include('profile._partial_mis_productos_comprados', $boughtProducts)
                 </div>
             </div>
         </div>
@@ -291,6 +282,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                    <br />
+
                 </div>
                 <div class="modal-body">
                     <form id="addProduct">
@@ -309,7 +302,7 @@
                                     <label for="title">
                                         <h4>Titulo</h4>
                                     </label>
-                                    <input type="text" class="form-control" name="title" id="title">
+                                    <input type="text" class="form-control" name="title">
                                 </div>
                             </div>
                             <div class="form-group col-12 col-md-6">
@@ -429,6 +422,12 @@
             data.append('cp', $('input[name="cp"]').val());
             data.append('fav_pay', $('select[name="fav_pay"]').val());
             data.append('shipping_preferences', $('select[name="shipping_preferences"]').val());
+            //get payback checkbox value, if is checked, set 1, else set 0
+            if ($('input[name="payback"]').is(':checked')) {
+                data.append('payback', 1);
+            } else {
+                data.append('payback', 0);
+            }
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('input[name="_token"]').val()

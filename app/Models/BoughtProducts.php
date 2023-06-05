@@ -15,7 +15,7 @@ class BoughtProducts extends Model
         'seller_id',
         'quantity',
         'order_id',
-        'calification_id',
+        'calification',
         'price'
     ];
 
@@ -33,9 +33,5 @@ class BoughtProducts extends Model
 
     public function order() {
         return $this->belongsTo(Order::class, 'order_id', 'id');
-    }
-
-    public function calification() {
-        return $this->belongsTo(SellerCalifications::class, 'calification_id', 'id');
     }
 }

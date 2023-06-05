@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class Seller extends Model
 {
@@ -18,15 +19,19 @@ class Seller extends Model
     }
 
     public function averageCalification() {
-        $califications = $this->user->sellerCalifications;
+        $output = new ConsoleOutput();
 
+        $califications = $this->califications;
+        $output->writeln($califications);
         $totalCalification = 0;
         $totalRatings = $califications->count();
 
         if($totalRatings == 0) {
+            $output->writeln('Not yet rated');
             return 'Not yet rated';
         } else {
             foreach ($califications as $calification) {
+                $output->writeln($calification);
                 $totalCalification += $calification->calification;
             }
 
@@ -38,14 +43,15 @@ class Seller extends Model
                 case 2:
                     return 'malo';
                 case 3:
-                    return 'regular';
-                case 4:
                     return 'bueno';
-                case 5:
-                    return 'muy bueno';
                 default:
-                    return 'Not yet rated';
+                    return 'muy bueno';
             }
+
         }
+    }
+
+    public function califications() {
+        return $this->hasMany(BoughtProducts::class, 'seller_id', 'user_id');
     }
 }
