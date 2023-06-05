@@ -7,6 +7,7 @@ use App\Models\BoughtProducts;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Payment;
+use App\Models\Product;
 use App\Models\User;
 use Exception;
 use GuzzleHttp\Client;
@@ -94,6 +95,15 @@ class PayPalCardController extends Controller
 
 
                 foreach ($cartItems as $item) {
+                    //from product stock, remove the quantity bought
+                    $product = Product::find($item['id']);
+                    //control that the stock is not negative
+                    if ($product->stock < $item['quantity']) {
+                        return redirect()->route('profile.edit')
+                            ->with('error', 'No hay suficiente stock de ' . $product->title);
+                    }
+                    $product->stock -= $item['quantity'];
+                    $product->save();
                     OrderDetail::create([
                         'product_id' => $item['id'],
                         'order_id' => $order->id,
@@ -114,7 +124,7 @@ class PayPalCardController extends Controller
                     }
                 }
 
-                // TODO assign fav_pay to buyers based on the most common payment_method of payments that belong to the user
+
 
 
                 return redirect()->route('profile.edit')
@@ -195,6 +205,16 @@ class PayPalCardController extends Controller
 
                 $cartItems = session('cart', []);
                 foreach ($cartItems as $item) {
+                    //from product stock, remove the quantity bought
+                    $product = Product::find($item['id']);
+                    //control that the stock is not negative
+                    if ($product->stock < $item['quantity']) {
+                        return redirect()->route('profile.edit')
+                            ->with('error', 'No hay suficiente stock de ' . $product->title);
+                    }
+                    $product->stock -= $item['quantity'];
+                    $product->save();
+
                     OrderDetail::create([
                         'product_id' => $item['id'],
                         'order_id' => $order->id,

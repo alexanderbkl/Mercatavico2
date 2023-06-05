@@ -1,6 +1,5 @@
-@extends("layouts.main")
-@section("content")
-
+@extends('layouts.main')
+@section('content')
     <h1 class="title titlemargin"> Buscar usuario </h1>
     <div class="search">
         <form action="" method="">
@@ -18,7 +17,7 @@
                 </div>
                 <div class="inputform">
                     <input type="text" id="name" name="name" maxlength="32" pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$"
-                           placeholder="">
+                        placeholder="">
                 </div>
                 <ul class="errors"></ul>
             </div>
@@ -27,7 +26,8 @@
                     <label for="pass">Clave</label>
                 </div>
                 <div class="inputform">
-                    <input type="text" id="pass" name="pass" maxlength="32" pattern="[A-Za-z0-9]+" placeholder="">
+                    <input type="text" id="pass" name="pass" maxlength="32" pattern="[A-Za-z0-9]+"
+                        placeholder="">
                 </div>
                 <ul class="errors"></ul>
             </div>
@@ -37,8 +37,8 @@
                 </div>
                 <div class="inputform">
                     <input type="text" id="email" name="email" maxlength="64"
-                           pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
-                           placeholder="">
+                        pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+                        placeholder="">
                 </div>
                 <ul class="errors"></ul>
             </div>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="inputform">
                     <input type="text" id="title" name="title" maxlength="32" pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$"
-                           placeholder="">
+                        placeholder="">
                 </div>
                 <ul class="errors"></ul>
             </div>
@@ -104,8 +104,8 @@
                     <label for="prize">Precio</label>
                 </div>
                 <div class="inputform">
-                    <input type="number" id="prize" min="0" name="prize" pattern="^[0-9]+[.,]{1,1}\[0]{2,2}$"
-                           placeholder="">
+                    <input type="number" id="prize" min="0" name="prize"
+                        pattern="^[0-9]+[.,]{1,1}\[0]{2,2}$" placeholder="">
                 </div>
                 <ul class="errors"></ul>
             </div>
@@ -114,15 +114,16 @@
                     <label for="ref">Referencia</label>
                 </div>
                 <div class="inputform">
-                    <input type="number" id="ref" name="ref" min="0" pattern="[0-9]*" placeholder="">
+                    <input type="number" id="ref" name="ref" min="0" pattern="[0-9]*"
+                        placeholder="">
                 </div>
                 <ul class="errors"></ul>
             </div>
             <div>
                 <div class="labelform">
-                    <label for="state">Estado</label><br>
+                    <label for="status">Estado</label><br>
                 </div>
-                <select name="state" id="state">
+                <select name="status" id="status">
                     <option value="broke">Roto</option>
                     <option value="restore">Restaurado</option>
                 </select>
@@ -154,8 +155,8 @@
                     <label for="title">Título</label>
                 </div>
                 <div class="inputform">
-                    <input type="text" id="title" name="title" maxlength="32" pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$"
-                           placeholder="">
+                    <input type="text" id="title" name="title" maxlength="32"
+                        pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$" placeholder="">
                 </div>
                 <ul class="errors"></ul>
             </div>
@@ -164,8 +165,8 @@
                     <label for="prize">Precio</label>
                 </div>
                 <div class="inputform">
-                    <input type="number" id="prize" min="0" name="prize" pattern="^[0-9]+[.,]{1,1}\[0]{2,2}$"
-                           placeholder="">
+                    <input type="number" id="prize" min="0" name="prize"
+                        pattern="^[0-9]+[.,]{1,1}\[0]{2,2}$" placeholder="">
                 </div>
                 <ul class="errors"></ul>
             </div>
@@ -174,15 +175,16 @@
                     <label for="ref">Referencia</label>
                 </div>
                 <div class="inputform">
-                    <input type="number" id="ref" name="ref" min="0" pattern="[0-9]*" placeholder="">
+                    <input type="number" id="ref" name="ref" min="0" pattern="[0-9]*"
+                        placeholder="">
                 </div>
                 <ul class="errors"></ul>
             </div>
             <div>
                 <div class="labelform">
-                    <label for="state">Estado</label><br>
+                    <label for="status">Estado</label><br>
                 </div>
-                <select name="state" id="state">
+                <select name="status" id="status">
                     <option value="broke">Roto</option>
                     <option value="restore">Restaurado</option>
                 </select>
@@ -194,5 +196,4 @@
 
         </form>
     </div>
-
 @endsection

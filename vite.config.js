@@ -17,5 +17,16 @@ export default defineConfig({
         alias: {
             'vue': 'vue/dist/vue.esm-bundler.js'
         }
+    },
+    server: {
+        cors: false,
+        proxy: {
+            '^/register': {
+                target: 'http://localhost:5173/',
+                ws: true,
+                changeOrigin: true
+            },
+        }
+
     }
 });

@@ -9,5 +9,5 @@ class state extends Model
 {
     use HasFactory;
     protected $table = "order_";
-    protected $fillable = ['user_id','foto','title','description','price','stock','state_id'];
+    protected $fillable = ['user_id','foto','title','description','price','stock','status_id'];
 }

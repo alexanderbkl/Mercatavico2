@@ -19,19 +19,33 @@
                 <ul class="errors"></ul>
             </div>
         </div>
-
         <div class="col-md-6 col-12">
+        <label class="label" for="name">Ciudad</label>
+        <br>
+        <select class="form-control" required
+            :value="selectedCity"
+            name="city_id"
+            @input="cityTouched = true; $emit('update:value', $event.target.value)"
+        >
+            <option
+                v-for="city in cities"
+                :key="city.id"
+                :value="city.id"
+            >
+                {{ city.province }}
+            </option>
+        </select>
+        <ul v-if="cityError" class="errors">
+            <li>{{ cityError }}</li>
+        </ul>
+
+        <div>
             <div>
-                <label class="label" for="name">Ciudad</label>
-                <input class="controlinput" type="text" id="ciudad" name="ciudad" maxlength="32" placeholder=" " autocomplete="on" autocapitalize="off" autocorrect="off" required>
-                <ul class="errors"></ul>
-            </div>
-            <div>
-                <label class="label" for="name">Código postal</label>
-                <input class="controlinput" type="text" id="cp" name="cp" maxlength="32" placeholder=" " autocomplete="on" autocapitalize="off" autocorrect="off" required>
-                <ul class="errors"></ul>
+            <label class="label" for="cp">Código postal</label>
+            <input type="text" name="cp" id="cp" placeholder=" " autocomplete="on" autocapitalize="off" autocorrect="off" required class="controlinput">
             </div>
         </div>
+    </div>
 
         <div class="col-md-6 col-12">
             <label class="label" for="pass">Contraseña</label>
@@ -75,8 +89,18 @@
                     return 'Las contraseñas no coinciden.'
                 }
                 return null
+            },
+            cityError() {
+            if (!this.selectedCity && this.cityTouched) {
+                return 'Ciudad requerida.';
             }
-        }
+            return null;
+        },
+        },
+         props: {
+            cities: Array,
+            selectedCity: Number
+         }
     }
     </script>
 

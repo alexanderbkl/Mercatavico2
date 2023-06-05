@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
+use App\Models\Buyer;
 use App\Models\Product;
 use App\Models\Rol;
+use App\Models\Seller;
 use App\Models\User;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
@@ -20,7 +23,7 @@ class UserController extends Controller
             $user = User::find($request->user_id);
             if($user){
                 if($user->rol->name=="administrador"){
-                    $newRol = Rol::where('name','usuario_registrado')->first()->id;
+                    $newRol = Rol::where('name','miembro')->first()->id;
                     $user->rol_id = $newRol;
                     $user->save();
                 }else{
@@ -43,29 +46,39 @@ class UserController extends Controller
     public function update(Request $request){
         $request->validate([
             'email'=>'required|email|max:250',
-            'city'=>'required',
+            'ciudad'=>'required',
             'cp'=>'required',
-            'address'=>'required',
         ],[
-            'address'=>'Dirección necesaria',
-            'city'=>'Ciudad necesaria',
-            'cp'=>'Código postal necesario',
-            'email'=>'Correo electrónico necesario',
+            'email.required'=>'El email es obligatorio.',
+            'email.email'=>'El email no es válido.',
+            'email.max'=>'El email no puede tener más de 250 caracteres.',
+            'ciudad.required'=>'La ciudad es obligatoria.',
+            'cp.required'=>'El código postal es obligatorio.',
         ]);
         $user = User::find($request->user_id);
         if($user){
             $user->name= $request->name;
             $user->email= $request->email;
             if(!$user->addressUser){
-                UserAddress::create([
-                    'user_id'=>$user->id,
-                    'address'=>$request->address,
-                    'city'=>$request->city,
-                    'cp'=>$request->cp,
-                ]);
+                 //create Address
+            Address::create([
+                'address'=>$request->address,
+                'city_id'=>$request->ciudad,
+                'cp'=>$request->cp,
+            ]);
+
+            Buyer::create([
+                'user_id'=>$user->id,
+                'fav_pay'=>'paypal',
+            ]);
+
+            Seller::create([
+                'user_id'=>$user->id,
+                'payback'=>false,
+            ]);
             }else{
                 $user->addressUser->address = $request->address;
-                $user->addressUser->city = $request->city;
+                $user->addressUser->city_id = $request->ciudad;
                 $user->addressUser->cp = $request->cp;
                 $user->addressUser->save();
             }

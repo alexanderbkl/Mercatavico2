@@ -47,7 +47,7 @@ class ProfileController extends Controller
             'materials' =>$materiales,
             'pedidos' =>$pedidos,
             'ciudades' =>City::all(),
-            'boughtProducts' => $boughtProducts ?? '',
+            'boughtProducts' => $boughtProducts ?? [],
         ]);
     }
 

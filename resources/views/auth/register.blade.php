@@ -77,7 +77,7 @@
                     <div class="fields">
 
                         <div>
-                            <register-component></register-component>
+                            <register-component :cities="{{ $cities }}"></register-component>
                         </div>
 
                     </div>

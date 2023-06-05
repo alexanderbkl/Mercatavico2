@@ -208,7 +208,10 @@
                     <h1>Usuarios</h1>
                     <input type="search" class="form-control" placeholder="Buscar usuarios..." id="search_usuarios">
                     <div id="contentUsers" style="margin-top: 50px">
-                        @include('profile._partial_usuarios', $usuarios)
+                        @include('profile._partial_usuarios', [
+                            'usuarios' => $usuarios,
+                            'ciudades' => $ciudades,
+                        ])
                     </div>
                 </div>
 
@@ -266,7 +269,9 @@
                     <h1>Todos mis productos comprados</h1>
                 @endif
                 <div id="contentPedidos" style="margin-top: 50px">
-                    @include('profile._partial_mis_productos_comprados', $boughtProducts)
+                    @include('profile._partial_mis_productos_comprados', [
+                        'boughtProducts' => $boughtProducts,
+                    ])
                 </div>
             </div>
         </div>
@@ -336,7 +341,7 @@
                                     <label for="email">
                                         <h4>Estado</h4>
                                     </label>
-                                    <select class="form-control" name="state">
+                                    <select class="form-control" name="status">
                                         <option value="Nuevo">Nuevo</option>
                                         <option value="Usado">Usado</option>
                                         <option value="Estropeado">Estropeado</option>
@@ -345,7 +350,7 @@
                             </div>
                             <div class="form-group col-12 col-md-6">
                                 <div class="col-xs-6">
-                                    <label for="state">
+                                    <label for="status">
                                         <h4>Materiales (múltiple)</h4>
                                     </label>
                                     <select class="form-control" id="inputSelectMateriales" name="materiales"
@@ -467,7 +472,7 @@
             data.append('descripcion', $('textarea[name="descripcion"]').val());
             data.append('price', $('input[name="price"]').val());
             data.append('stock', $('input[name="stock"]').val());
-            data.append('state', $('select[name="state"]').val());
+            data.append('status', $('select[name="status"]').val());
             data.append('materiales', $('#inputSelectMateriales').val());
             $.ajax({
                 headers: {

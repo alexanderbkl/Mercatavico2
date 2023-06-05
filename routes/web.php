@@ -7,6 +7,7 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\PayPalCardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -82,6 +83,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/cart/get-product/{product_id}', [CartController::class, 'getProduct'])->name('get.product');
 
 Route::get('/product/get-seller/{user_id}', [ProductController::class, 'getSeller'])->name('product.seller');
+
+Route::get('/cities', [RegisteredUserController::class, 'getCities'])->name('cities');
 
 
 require __DIR__.'/auth.php';
