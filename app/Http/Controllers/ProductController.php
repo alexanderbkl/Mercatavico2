@@ -172,23 +172,22 @@ class ProductController extends Controller
     }
 
     public function filter(Request $request){
-
+        $output = new ConsoleOutput();
+        $output->writeln("estado:");
+        $output->writeln($request);
         if(!$request->estado){
             $productos = Product::where('price','>',$request->pmin)
                 ->where('price','<',$request->pmax)
                 ->get();
             $html = view('products._partial_productos',compact('productos'))->render();
             return response()->json(['view'=>$html]);
-
         }
         $productos = Product::where('status',$request->estado)
             ->where('price','>',$request->pmin)
             ->where('price','<',$request->pmax)
             ->get();
         $html = view('products._partial_productos',compact('productos'))->render();
-
         return response()->json(['view'=>$html]);
-
     }
 
     public function getSeller($sellerId){

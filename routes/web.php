@@ -59,7 +59,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/product-update', [ProductController::class, 'update'])->name('product.update');
     Route::post('/product-destroy', [ProductController::class, 'destroy'])->name('product.destroy');
     Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
-    Route::post('/product-filter', [ProductController::class, 'filter'])->name('product.filter');
     Route::post('/change-status-user', [UserController::class, 'changeRol'])->name('change.rol');
     Route::post('/user-update', [UserController::class, 'update'])->name('user.update');
     Route::post('/user-destroy', [UserController::class, 'destroy'])->name('user.destroy');
@@ -83,6 +82,9 @@ Route::get('/cart/get-product/{product_id}', [CartController::class, 'getProduct
 Route::get('/product/get-seller/{user_id}', [ProductController::class, 'getSeller'])->name('product.seller');
 
 Route::get('/cities', [RegisteredUserController::class, 'getCities'])->name('cities');
+
+
+Route::get('/product-filter', [ProductController::class, 'filter'])->name('product.filter');
 
 
 require __DIR__.'/auth.php';

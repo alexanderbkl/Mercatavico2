@@ -41,7 +41,8 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            //'g-recaptcha-response' => 'required|recaptchav3:register,0.5'
+            'cp' => ['required', 'string', 'max:5'],
+            'g-recaptcha-response' => 'required|recaptchav3:register,0.5'
         ], [
             'required' => 'El campo :attribute es obligatorio',
             'string' => 'El campo :attribute debe ser un string',
@@ -50,8 +51,8 @@ class RegisteredUserController extends Controller
             'unique' => 'El campo :attribute ya existe',
             'confirmed' => 'El campo :attribute no coincide',
             'password' => 'El campo :attribute debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número',
-            //'g-recaptcha-response.required' => 'Por favor, verifica que no eres un robot',
-            //'g-recaptcha-response.recaptchav3' => 'Por favor, verifica que no eres un robot',
+            'g-recaptcha-response.required' => 'Por favor, verifica que no eres un robot',
+            'g-recaptcha-response.recaptchav3' => 'Por favor, verifica que no eres un robot',
         ]);
 
 

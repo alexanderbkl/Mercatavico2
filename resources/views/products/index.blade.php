@@ -64,11 +64,9 @@
                 headers: {
                     'X-CSRF-TOKEN': $('input[name="_token"]').val()
                 },
-                url: '{{ route('product.filter') }}',
-                type: 'post',
-                contentType: false,
-                processData: false,
-                data: data,
+                url: '{{ route('product.filter') }} + ?estado=' + estado + '&pmin=' + pmin + '&pmax=' +
+                    pmax + '',
+                type: 'get',
                 success: function(data) {
                     $('#content_products').html(data.view)
                 },
