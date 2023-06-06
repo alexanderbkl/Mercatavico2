@@ -10,7 +10,6 @@ use App\Models\Payment;
 use App\Models\Product;
 use App\Models\User;
 use Exception;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;

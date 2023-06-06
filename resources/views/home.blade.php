@@ -40,7 +40,7 @@
                                 @if ($producto->user->id != \Illuminate\Support\Facades\Auth::id())
                                     <button type="button" data-product_id="{{ $producto->id }}"
                                         class="btn btn-primary addCartBtn"><i class="fa fa-plus"></i> Añadir al
-                                        carraito</button>
+                                        carrito</button>
                                 @endif
                             @endauth
 
@@ -84,27 +84,6 @@
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 
     <script>
-        /*
-                                                                                            $('.addCartBtn').click((e)=>{
-                                                                                                let product_id = e.currentTarget.dataset.product_id;
-                                                                                                let url = '{{ route('cart.add', ':product_id') }}';
-                                                                                                url = url.replace(':product_id', product_id);
-                                                                                                $.ajax({
-                                                                                                    headers: {
-                                                                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                                                                                    },
-                                                                                                    url: url,
-                                                                                                    type: 'get',
-                                                                                                    success: function (data) {
-                                                                                                        $('#numItemsCart').text(data.numItems)
-                                                                                                        toastr.success(data.message);
-                                                                                                    },
-                                                                                                    error: function (error) {
-                                                                                                        toastr.error(error.responseJSON.message);
-                                                                                                    }
-                                                                                                });
-                                                                                            })
-                                                                                            */
         //add to cart using localstorage
         $(document).ready(function() {
             $('.addCartBtn').click(function(e) {
