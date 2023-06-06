@@ -20,7 +20,7 @@ class User extends Authenticatable
 
     protected $table = "users";
 
-    protected $fillable = ['name','email','credits','rol_id','password', 'address_id'];
+    protected $fillable = ['name','email','credits','rol','password', 'address_id'];
 
     public function addressUser(){
         $output = new ConsoleOutput();
@@ -32,9 +32,10 @@ class User extends Authenticatable
         return $this->hasMany(Product::class,'user_id','id');
     }
 
-    public function rol(){
-        return $this->belongsTo(Rol::class,'rol_id','id');
-    }
+    public function getRolAttribute($value)
+{
+    return (object) ['name' => $value];
+}
 
     public function orders(){
         return $this->hasMany(Order::class,'user_id','id');

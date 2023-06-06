@@ -35,6 +35,7 @@
                 @endif
                 <p style="font-weight: bold;font-size: 16px">Precio: {{ $producto->price }}€</p>
                 <p>Publicado por: {{ $producto->user->name }}</p>
+                <p>Calificación: {{ $producto->user->seller->calificate }}</p>
                 <p>Dirección:</p>
                 <p>{{ $producto->user->addressUser->address . ' ' . $producto->user->addressUser->city->province . ' ' . $producto->user->addressUser->cp }}
                 <div id="mapid" style="height: 180px;"></div>

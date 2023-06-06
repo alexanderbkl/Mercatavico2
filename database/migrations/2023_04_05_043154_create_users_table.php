@@ -15,16 +15,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-          $table->id();
-          $table->string('name', 32);
-          $table->string('email', 64);
-          $table->float('credits', 8, 2)->default(0);
-          $table->string('password', 128);
-          $table->unsignedInteger('rol_id')->nullable(false);
-		  $table->unsignedBigInteger('address_id')->nullable();
-		  $table->foreign('address_id')->references('id')->on('addresses');
-          $table->timestamps();
-        });
+            $table->id();
+            $table->string('name', 32);
+            $table->string('email', 64);
+            $table->float('credits', 8, 2)->default(0);
+            $table->string('password', 128);
+            //create an enum for rol (miembro, administrador)
+            $table->enum('rol', ['miembro', 'administrador'])->default('miembro');
+            $table->unsignedBigInteger('address_id')->nullable();
+            $table->foreign('address_id')->references('id')->on('addresses');
+            $table->timestamps();
+          });
 
 
         //create user with name user1, email user1@mail.com, password 12345678, etc
@@ -32,7 +33,7 @@ return new class extends Migration
             'name'=>'user1',
             'email'=>'user1@mail.com',
             'password'=>Hash::make('12345678'),
-            'rol_id'=>1,
+            'rol'=>1,
             'address_id'=>1,
         ]);
 
@@ -40,7 +41,7 @@ return new class extends Migration
             'name'=>'user2',
             'email'=>'user2@mail.com',
             'password'=>Hash::make('12345678'),
-            'rol_id'=>1,
+            'rol'=>1,
             'address_id'=>2,
         ]);
 
@@ -48,7 +49,7 @@ return new class extends Migration
             'name'=>'admin',
             'email'=>'admin@mail.com',
             'password'=>Hash::make('12345678'),
-            'rol_id'=>2,
+            'rol'=>2,
             'address_id'=>3,
         ]);
 

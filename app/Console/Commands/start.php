@@ -31,7 +31,7 @@ class start extends Command
      */
     public function handle()
     {
-        $roles = ['administrador','usuario_registrado'];
+        $roles = ['administrador','miembro'];
         $rolesExist = Rol::all();
         if($rolesExist){
             foreach($rolesExist as $rol){

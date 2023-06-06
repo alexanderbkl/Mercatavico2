@@ -468,12 +468,49 @@
         $('#btnSaveProduct').click(() => {
             let data = new FormData();
             data.append('title', $('input[name="title"]').val());
+            //check if foto is empty
+            if ($('input[name="foto"]')[0].files[0] == undefined) {
+                alert('Debes añadir una foto!!!');
+                return;
+            } else {
+                data.append('foto', $('input[name="foto"]')[0].files[0]);
+            }
             data.append('foto', $('input[name="foto"]')[0].files[0]);
-            data.append('descripcion', $('textarea[name="descripcion"]').val());
-            data.append('price', $('input[name="price"]').val());
-            data.append('stock', $('input[name="stock"]').val());
-            data.append('status', $('select[name="status"]').val());
-            data.append('materiales', $('#inputSelectMateriales').val());
+            //check if descripcion is empty
+            if ($('textarea[name="descripcion"]').val() == '') {
+                alert('Debes añadir una descripción!!!');
+                return;
+            } else {
+                data.append('descripcion', $('textarea[name="descripcion"]').val());
+            }
+            //check if price is empty
+            if ($('input[name="price"]').val() == '') {
+                alert('Debes añadir un precio!!!');
+                return;
+            } else {
+                data.append('price', $('input[name="price"]').val());
+            }
+            //check if stock is empty
+            if ($('input[name="stock"]').val() == '') {
+                alert('Debes añadir un stock!!!');
+                return;
+            } else {
+                data.append('stock', $('input[name="stock"]').val());
+            }
+            //check if status is empty
+            if ($('select[name="status"]').val() == '') {
+                alert('Debes añadir un estado!!!');
+                return;
+            } else {
+                data.append('status', $('select[name="status"]').val());
+            }
+            //check if materiales is empty
+            if ($('#inputSelectMateriales').val() == '') {
+                alert('Debes seleccionar al menos un material!!!');
+                return;
+            } else {
+                data.append('materiales', $('#inputSelectMateriales').val());
+            }
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'

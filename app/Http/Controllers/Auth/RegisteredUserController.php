@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Buyer;
 use App\Models\City;
-use App\Models\Rol;
 use App\Models\Seller;
 use App\Models\User;
 use App\Models\UserAddress;
@@ -67,7 +66,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'rol_id'=> Rol::where('name','miembro')->first()->id,
+            'rol' => 'miembro',
             'address_id'=>$userAddress->id,
         ]);
 

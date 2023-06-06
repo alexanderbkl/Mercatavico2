@@ -27,6 +27,17 @@ class ProductController extends Controller
             Storage::putFileAs('public/productsImages', $request->file('foto'),$path);
         }
 
+        $output = new ConsoleOutput();
+
+        $output->writeln("materiales:");
+        $output->writeln($request->materiales);
+        $output->writeln("title:");
+        $output->writeln($request->title);
+        $output->writeln("descripcion:");
+        $output->writeln($request->descripcion);
+        $output->writeln($request->stock);
+        $output->writeln($request->status);
+
         $product = Product::create([
             'user_id'=>Auth::id(),
             'foto'=>$path,
@@ -57,9 +68,13 @@ class ProductController extends Controller
 
 
         $output = new ConsoleOutput();
+        $output->writeln("product_id:");
         $output->writeln($request->product_id);
+        $output->writeln("materiales:");
         $output->writeln($request->materiales);
+        $output->writeln("title:");
         $output->writeln($request->title);
+        $output->writeln("descripcion:");
         $output->writeln($request->descripcion);
         $output->writeln($request->stock);
         $output->writeln($request->status);

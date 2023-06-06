@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody id="content_products_table">
-        @if (count($userProducts) > 0)
+        @if ($userProducts && count($userProducts) > 0)
 
             @foreach ($userProducts as $producto)
                 <tr class="product_item_list" data-product_id="{{ $producto->id }}" data-title="{{ $producto->title }}"
@@ -131,8 +131,7 @@
                                     <h4>Estado</h4>
                                 </label>
                                 <select class="form-control" name="status_edit">
-                                    <option {{ $producto->status == 'Nuevo' ? 'selected' : '' }} value="Nuevo">Nuevo
-                                    </option>
+                                    <option value="Nuevo">Nuevo</option>
                                     <option value="Usado">Usado</option>
                                     <option value="Estropeado">Estropeado</option>
                                 </select>
@@ -208,7 +207,9 @@
         $('input[name="price_edit"]').val(e.currentTarget.dataset.price);
         $('input[name="stock_edit"]').val(e.currentTarget.dataset.stock);
         $('select[name="status_edit"]').val(e.currentTarget.dataset.status);
+        //check that the materials are selected
         $('#inputSelectMaterialesEdit').val(e.currentTarget.dataset.materiales.split(','));
+
 
     })
 
@@ -220,8 +221,14 @@
         data.append('descripcion', $('textarea[name="descripcion_edit"]').val());
         data.append('price', $('input[name="price_edit"]').val());
         data.append('stock', $('input[name="stock_edit"]').val());
+
         data.append('status', $('select[name="status_edit"]').val());
-        data.append('materiales', $('#inputSelectMaterialesEdit').val());
+        //check that there are materials selected
+        if ($('#inputSelectMaterialesEdit').val() != null) {
+            data.append('materiales', $('#inputSelectMaterialesEdit').val());
+        } else {
+            alert('Debes seleccionar al menos un material')
+        }
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
