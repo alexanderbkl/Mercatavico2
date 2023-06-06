@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'cp' => ['required', 'string', 'max:5'],
-            'g-recaptcha-response' => 'required|recaptchav3:register,0.5'
+            //'g-recaptcha-response' => 'required|recaptchav3:register,0.5'
         ], [
             'required' => 'El campo :attribute es obligatorio',
             'string' => 'El campo :attribute debe ser un string',
