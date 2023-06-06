@@ -1,3 +1,5 @@
 *
 !.gitignore
 !productsImages/
+!public/
+!public/**/*
