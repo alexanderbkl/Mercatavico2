@@ -110,6 +110,7 @@
             processData: false,
             data: data,
             success: function(data) {
+                $(".modal-backdrop").remove(); // hide the overlay
                 $('#contentMaterials').html(data.view)
                 toastr.success(data.message);
             },
@@ -132,6 +133,7 @@
             processData: false,
             data: data,
             success: function(data) {
+                $(".modal-backdrop").remove(); // hide the overlay
                 $('#contentMaterials').html(data.view)
                 toastr.success(data.message);
             },

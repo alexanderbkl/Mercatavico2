@@ -239,9 +239,13 @@
             processData: false,
             data: data,
             success: function(data) {
-
+                console.log(data.view)
+                console.log(data.view)
                 $('#contentProductos').html(data.view)
                 $('#editProduct')[0].reset();
+                $('#modalEditProducts').modal('hide'); // hide the modal
+                $(".modal-backdrop").remove(); // hide the overlay
+                $(".modal-backdrop").remove(); // hide the overlay
                 $('.img-thumbnail').attr('src', 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png')
                 toastr.success(data.message);
             },
@@ -270,6 +274,7 @@
                 $('input[name="product_id_delete_input"]').val('')
                 $('#confirmDeleteModal').modal('hide'); // Close the modal using Bootstrap's method
                 $('body').removeClass('modal-open')
+                $(".modal-backdrop").remove(); // hide the overlay
                 toastr.success(data.message);
             },
             error: function(error) {

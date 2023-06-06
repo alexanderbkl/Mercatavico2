@@ -213,6 +213,7 @@
             data: data,
             success: function(data) {
                 toastr.success(data.message);
+                $(".modal-backdrop").remove(); // hide the overlay
                 $('#contentUsers').html(data.view)
             },
             error: function(error) {
@@ -235,6 +236,7 @@
             data: data,
             success: function(data) {
                 toastr.success(data.message);
+                $(".modal-backdrop").remove(); // hide the overlay
                 $('#contentUsers').html(data.view)
             },
             error: function(error) {
@@ -271,6 +273,7 @@
                 $('.modal-backdrop').remove()
 
                 toastr.success(data.message);
+                $(".modal-backdrop").remove(); // hide the overlay
             },
             error: function(error) {
                 toastr.error(error.responseJSON.message);

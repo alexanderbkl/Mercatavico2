@@ -413,6 +413,7 @@
     <script>
         @if (session('deleteCart'))
             toastr.success('Carrito vaciado correctamente');
+            $(".modal-backdrop").remove(); // hide the overlay
             //delete cart from localstorage
             localStorage.removeItem('cart');
         @endif
@@ -444,6 +445,7 @@
                 data: data,
                 success: function(data) {
                     toastr.success(data.message);
+                    $(".modal-backdrop").remove(); // hide the overlay
                 },
                 error: function(error) {
                     toastr.error(error.responseJSON.message);
@@ -526,6 +528,7 @@
                     $('#addProduct')[0].reset();
                     $('.img-thumbnail').attr('src', 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png')
                     toastr.success(data.message);
+                    $(".modal-backdrop").remove(); // hide the overlay
                 },
                 error: function(error) {
                     toastr.error(error);
@@ -548,6 +551,7 @@
                 success: function(data) {
                     $('#contentMaterials').html(data.view)
                     toastr.success(data.message);
+                    $(".modal-backdrop").remove(); // hide the overlay
                 },
                 error: function(error) {
                     toastr.error(error.responseJSON.message);

@@ -149,6 +149,7 @@
         }
 
         function displayNotification(message) {
+            $(".modal-backdrop").remove(); // hide the overlay
             toastr.success(message);
         }
 
