@@ -23,12 +23,10 @@ class UserController extends Controller
             $user = User::find($request->user_id);
             if($user){
                 if($user->rol->name=="administrador"){
-                    $newRol = Rol::where('name','miembro')->first()->id;
-                    $user->rol_id = $newRol;
+                    $user->rol = 'miembro';
                     $user->save();
                 }else{
-                    $newRol = Rol::where('name','administrador')->first()->id;
-                    $user->rol_id = $newRol;
+                    $user->rol = 'administrador';
                     $user->save();
                 }
                 $usuarios = User::all();
