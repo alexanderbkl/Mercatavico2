@@ -9,45 +9,47 @@
         </tr>
     </thead>
     <tbody>
-        @if (count($boughtProducts) > 0)
-            @foreach ($boughtProducts as $boughtProduct)
-                <tr>
-                    <td>{{ $boughtProduct->order->payment_id }}</td>
-                    <td>{{ $boughtProduct->seller->name }}</td>
-                    <td>{{ $boughtProduct->quantity }}</td>
-                    <td>
-                        <form class="calificacionForm" id="calificacionForm_{{ $boughtProduct->id }}">
-                            <p class="clasificacion d-flex justify-content-center flex-row">
-                                <input type="hidden" class="form-control" name="bought_product_id"
-                                    value="{{ $boughtProduct->id }}">
-                                <input type="hidden" class="form-control" name="seller_id"
-                                    value="{{ $boughtProduct->seller->id }}">
+        @if (count($orders) > 0)
+            @foreach ($orders as $order)
+                @foreach ($order->orderDetails as $orderDetail)
+                    <tr>
+                        <td>{{ $orderDetail->order_id }}</td>
+                        <td>{{ $orderDetail->product->user->name }}</td>
+                        <td>{{ $orderDetail->quantity }}</td>
+                        <td>
+                            <form class="calificacionForm" id="calificacionForm_{{ $orderDetail->id }}">
+                                <p class="clasificacion d-flex justify-content-center flex-row">
+                                    <input type="hidden" class="form-control" name="bought_product_id"
+                                        value="{{ $orderDetail->id }}">
+                                    <input type="hidden" class="form-control" name="seller_id"
+                                        value="{{ $orderDetail->product->user->id }}">
 
-                                <input id="radio1_{{ $boughtProduct->id }}" type="radio" name="calification"
-                                    @if ($boughtProduct->calification == 5) checked @endif value="5">
-                                <label for="radio1_{{ $boughtProduct->id }}">★</label>
+                                    <input id="radio1_{{ $orderDetail->id }}" type="radio" name="calification"
+                                        @if ($orderDetail->calification == 5) checked @endif value="5">
+                                    <label for="radio1_{{ $orderDetail->id }}">★</label>
 
-                                <input id="radio2_{{ $boughtProduct->id }}" type="radio" name="calification"
-                                    @if ($boughtProduct->calification == 4) checked @endif value="4">
-                                <label for="radio2_{{ $boughtProduct->id }}">★</label>
+                                    <input id="radio2_{{ $orderDetail->id }}" type="radio" name="calification"
+                                        @if ($orderDetail->calification == 4) checked @endif value="4">
+                                    <label for="radio2_{{ $orderDetail->id }}">★</label>
 
-                                <input id="radio3_{{ $boughtProduct->id }}" type="radio" name="calification"
-                                    @if ($boughtProduct->calification == 3) checked @endif value="3">
-                                <label for="radio3_{{ $boughtProduct->id }}">★</label>
+                                    <input id="radio3_{{ $orderDetail->id }}" type="radio" name="calification"
+                                        @if ($orderDetail->calification == 3) checked @endif value="3">
+                                    <label for="radio3_{{ $orderDetail->id }}">★</label>
 
-                                <input id="radio4_{{ $boughtProduct->id }}" type="radio" name="calification"
-                                    @if ($boughtProduct->calification == 2) checked @endif value="2">
-                                <label for="radio4_{{ $boughtProduct->id }}">★</label>
+                                    <input id="radio4_{{ $orderDetail->id }}" type="radio" name="calification"
+                                        @if ($orderDetail->calification == 2) checked @endif value="2">
+                                    <label for="radio4_{{ $orderDetail->id }}">★</label>
 
-                                <input id="radio5_{{ $boughtProduct->id }}" type="radio" name="calification"
-                                    @if ($boughtProduct->calification == 1) checked @endif value="1">
-                                <label for="radio5_{{ $boughtProduct->id }}">★</label>
-                            </p>
-                            <button type="submit" id="submit_{{ $boughtProduct->id }}"
-                                style="display: none;"></button>
-                        </form>
-                    </td>
-                </tr>
+                                    <input id="radio5_{{ $orderDetail->id }}" type="radio" name="calification"
+                                        @if ($orderDetail->calification == 1) checked @endif value="1">
+                                    <label for="radio5_{{ $orderDetail->id }}">★</label>
+                                </p>
+                                <button type="submit" id="submit_{{ $orderDetail->id }}"
+                                    style="display: none;"></button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
             @endforeach
         @else
             <p>No hay pedidos</p>

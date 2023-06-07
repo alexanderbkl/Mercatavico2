@@ -18,11 +18,17 @@ class Seller extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function averageCalification() {
+
+    //orderdetails has product id
+    public function califications($boughtProductId) {
+        return $this->hasMany(OrderDetail::class, 'product_id', 'id')->where('product_id', $boughtProductId)->whereNotNull('calification');
+    }
+
+    public function averageCalification($boughtProductId) {
         $output = new ConsoleOutput();
 
-        $califications = $this->califications;
-        $output->writeln($califications);
+        $califications = $this->califications($boughtProductId);
+
         $totalCalification = 0;
         $totalRatings = $califications->count();
 
@@ -31,6 +37,7 @@ class Seller extends Model
             return 'Not yet rated';
         } else {
             foreach ($califications as $calification) {
+                $output->writeln("Calification: ");
                 $output->writeln($calification);
                 $totalCalification += $calification->calification;
             }
@@ -51,7 +58,4 @@ class Seller extends Model
         }
     }
 
-    public function califications() {
-        return $this->hasMany(BoughtProducts::class, 'seller_id', 'user_id');
-    }
 }

@@ -49,8 +49,12 @@ class User extends Authenticatable
         return $this->hasOne(Seller::class, 'user_id', 'id');
     }
 
-    public function boughtProducts() {
-        return $this->hasMany(BoughtProducts::class, 'user_id', 'id');
+    public function orderDetails($orders) {
+        $orderDetails = [];
+        foreach ($orders as $order) {
+            $orderDetails[] = $order->orderDetails;
+        }
+        return $this->hasMany(OrderDetail::class, 'user_id', 'id');
     }
 
 

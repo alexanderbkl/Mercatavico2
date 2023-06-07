@@ -9,6 +9,7 @@ use App\Models\Buyer;
 use App\Models\City;
 use App\Models\Material;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Seller;
 use App\Models\User;
@@ -28,15 +29,16 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
+
     public function edit(): View
     {
         if(Auth::user()->rol->name=='administrador'){
             $userProducts = Product::all();
-            $pedidos = Order::all();
+            $orders = Order::all();
+
         }else{
             $userProducts = Auth::user()->productos;
-            $pedidos = Auth::user()->orders;
-            $boughtProducts = Auth::user()->boughtProducts;
+            $orders = Auth::user()->orders;
         }
         $usuarios =User::all();
         $materiales =Material::all();
@@ -45,9 +47,8 @@ class ProfileController extends Controller
             'userProducts' =>$userProducts,
             'usuarios' =>$usuarios,
             'materials' =>$materiales,
-            'pedidos' =>$pedidos,
+            'orders' =>$orders,
             'ciudades' =>City::all(),
-            'boughtProducts' => $boughtProducts ?? [],
         ]);
     }
 
@@ -136,7 +137,6 @@ class ProfileController extends Controller
     public function addCalification(Request $request) {
         $output = new ConsoleOutput();
 
-        try {
             $validatedData = $request->validate([
                 'bought_product_id' => 'required|integer',
                 'calification' => 'required|integer|min:1|max:5',
@@ -152,15 +152,21 @@ class ProfileController extends Controller
             if ($validatedData) {
                 DB::transaction(function () use ($validatedData, $output) {
                     // First update the BoughtProduct
-                    $boughtProduct = BoughtProducts::findOrFail($validatedData['bought_product_id']);
-                    $boughtProduct->calification = $validatedData['calification'];
-                    $boughtProduct->save();
-
-                    // Then calculate the average calification of the seller and update the seller
-                    $seller = Seller::where('user_id', $validatedData['seller_id'])->first();
-                    $averageCalification = $seller->averageCalification();
-                    $seller->calificate = $averageCalification;
-                    $seller->save();
+                    $orderDetail = OrderDetail::findOrFail($validatedData['bought_product_id']);
+                    $output->writeln("orderDetail: " . $orderDetail);
+                    $output->writeln("calification: " . $validatedData['calification']);
+                    $orderDetail->calification = $validatedData['calification'];
+                    $orderDetail->save();
+                    try {
+                        // Then calculate the average calification of the seller and update the seller
+                        $seller = Seller::where('user_id', $validatedData['seller_id'])->first();
+                        $averageCalification = $seller->averageCalification($validatedData['bought_product_id']);
+                        $seller->calificate = $averageCalification;
+                        $seller->save();
+                    } catch (Exception $e) {
+                        $output->writeln($e->getMessage());
+                        return response()->json(['error' => 'Failed to add calification'], 500);
+                    }
                 });
 
                 return response()->json(['message' => 'Calification added successfully'], 200);
@@ -168,18 +174,18 @@ class ProfileController extends Controller
                 $output->writeln("error: failed to add calification (no validated data)");
                 return response()->json(['error' => 'Failed to add calification, no validated data'], 500);
             }
-        } catch (Exception $e) {
-            $output->writeln($e->getMessage());
-            return response()->json(['error' => 'Failed to add calification'], 500);
-        }
+
     }
 
     public function showSellerRating($seller_id) {
+        $output = new ConsoleOutput();
+
         $seller = Seller::where('user_id', $seller_id)->first();
 
         if ($seller) {
-            $averageCalification = $seller->averageCalification();
 
+            $averageCalification = $seller->averageCalification();
+            $output->writeln("averageCalification: " . $averageCalification);
             return response()->json(['average_calification' => $averageCalification], 200);
         } else {
             return response()->json(['error' => 'Seller not found'], 404);

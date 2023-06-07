@@ -244,8 +244,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (count($pedidos) > 0)
-                                @foreach ($pedidos as $pedido)
+                            @if (count($orders) > 0)
+                                @foreach ($orders as $pedido)
                                     <tr>
                                         <td>{{ $pedido->id }}</td>
                                         <td>{{ $pedido->user->name }}</td>
@@ -269,9 +269,7 @@
                     <h1>Todos mis productos comprados</h1>
                 @endif
                 <div id="contentPedidos" style="margin-top: 50px">
-                    @include('profile._partial_mis_productos_comprados', [
-                        'boughtProducts' => $boughtProducts,
-                    ])
+                    @include('profile._partial_mis_productos_comprados')
                 </div>
             </div>
         </div>

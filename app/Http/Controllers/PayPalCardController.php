@@ -107,15 +107,9 @@ class PayPalCardController extends Controller
                         'product_id' => $item['id'],
                         'order_id' => $order->id,
                         'quantity' => $item['quantity'],
-                    ]);
-                    BoughtProducts::create([
-                        'product_id' => $item['id'],
-                        'user_id' => Auth::id(),
-                        'seller_id' => $item['user_id'],
-                        'quantity' => $item['quantity'],
-                        'order_id' => $order->id,
                         'price' => $item['price'],
                     ]);
+
                     if (User::find($item['user_id'])->rol->name == "miembro") {
                         $user = User::find($item['user_id']);
                         $user->credits += ($item['price'] * $item['quantity']);
@@ -199,9 +193,6 @@ class PayPalCardController extends Controller
 
 
 
-
-
-
                 $cartItems = session('cart', []);
                 foreach ($cartItems as $item) {
                     //from product stock, remove the quantity bought
@@ -215,19 +206,15 @@ class PayPalCardController extends Controller
                     //if the stock is 0 or less, delete the product
                     $product->save();
 
+
                     OrderDetail::create([
                         'product_id' => $item['id'],
                         'order_id' => $order->id,
                         'quantity' => $item['quantity'],
-                    ]);
-                    BoughtProducts::create([
-                        'product_id' => $item['id'],
-                        'user_id' => Auth::id(),
-                        'seller_id' => $item['user_id'],
-                        'quantity' => $item['quantity'],
-                        'order_id' => $order->id,
                         'price' => $item['price'],
                     ]);
+
+
                     if (User::find($item['user_id'])->rol->name == "miembro") {
                         $user = User::find($item['user_id']);
                         $user->credits += ($item['price'] * $item['quantity']);
