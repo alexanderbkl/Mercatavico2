@@ -118,7 +118,7 @@ class PayPalCardController extends Controller
                     ]);
                     if (User::find($item['user_id'])->rol->name == "miembro") {
                         $user = User::find($item['user_id']);
-                        $user->credits += ($item['price'] * $item['quantity']) / 2;
+                        $user->credits += ($item['price'] * $item['quantity']);
                         $user->save();
                     }
                 }
@@ -212,6 +212,7 @@ class PayPalCardController extends Controller
                             ->with('error', 'No hay suficiente stock de ' . $product->title);
                     }
                     $product->stock -= $item['quantity'];
+                    //if the stock is 0 or less, delete the product
                     $product->save();
 
                     OrderDetail::create([
@@ -229,8 +230,13 @@ class PayPalCardController extends Controller
                     ]);
                     if (User::find($item['user_id'])->rol->name == "miembro") {
                         $user = User::find($item['user_id']);
-                        $user->credits += ($item['price'] * $item['quantity']) / 2;
+                        $user->credits += ($item['price'] * $item['quantity']);
+                        //sum to user seller cred_total the price of the product multiplied by the quantity
+                        $output = new ConsoleOutput();
+                        $user->seller->cred_total += ($item['price'] * $item['quantity']);
+                        $output->writeln("cred_total: " . $user->seller->cred_total);
                         $user->save();
+                        $user->seller->save();
                     }
                 }
                 session()->forget('cart');

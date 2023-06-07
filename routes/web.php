@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,14 @@ Route::get('/test', function () {
 
 Route::get('/', function () {
     $productos = Product::all();
+    //for each product, filter the ones that have 0 or less stock
+    foreach($productos as $key=>$product){
+        if($product->stock <= 0){
+            $output = new ConsoleOutput();
+            $output->writeln($product->stock);
+            unset($productos[$key]);
+        }
+    }
     return view('home',compact('productos'));
 })->name('home');
 

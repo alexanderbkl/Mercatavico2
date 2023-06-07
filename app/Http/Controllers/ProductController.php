@@ -17,6 +17,14 @@ class ProductController extends Controller
 
     public function index(){
         $productos = Product::all();
+        //for each product, filter the ones that have 0 or less stock
+        foreach($productos as $key=>$product){
+            if($product->stock <= 0){
+                $output = new ConsoleOutput();
+                $output->writeln($product->stock);
+                unset($productos[$key]);
+            }
+        }
         return view('products.index',compact('productos'));
     }
     public function store(Request $request){
