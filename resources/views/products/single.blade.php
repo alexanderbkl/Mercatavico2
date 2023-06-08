@@ -34,15 +34,15 @@
                     <p>Stock: {{ $producto->stock }}</p>
                 @endif
                 <p style="font-weight: bold;font-size: 16px">Precio: {{ $producto->price }}€</p>
-                <p>Publicado por: {{ $producto->user->name }}</p>
-                <p>Calificación: {{ $producto->user->seller->calificate }}</p>
+                <p>Publicado por: {{ $producto->seller->user->name }}</p>
+                <p>Calificación: {{ $producto->seller->user->calificate }}</p>
                 <p>Dirección:</p>
-                <p>{{ $producto->user->addressUser->address . ' ' . $producto->user->addressUser->city->province . ' ' . $producto->user->addressUser->cp }}
+                <p>{{ $producto->seller->user->addressUser->address . ' ' . $producto->seller->user->addressUser->city->name . ' ' . $producto->seller->user->addressUser->cp }}
                 <div id="mapid" style="height: 180px;"></div>
 
                 </p>
                 @auth
-                    @if ($producto->user->id != \Illuminate\Support\Facades\Auth::id())
+                    @if ($producto->seller->user->id != \Illuminate\Support\Facades\Auth::id())
                         <button type="button" class="btn btn-primary addCartBtn" data-product_id="{{ $producto->id }}"><i
                                 class="fa fa-plus"></i> Añadir al carrito</button>
                     @endif
@@ -108,7 +108,7 @@
                         description: response.description,
                         foto: response.foto,
                         status: response.status,
-                        user_id: response.user_id,
+                        seller_id: response.seller_id,
                         created_at: response.created_at,
                         updated_at: response.updated_at,
                         quantity: 1
@@ -152,9 +152,9 @@
 
 
 
-        var address = "{{ $producto->user->addressUser->address }}";
-        var city = "{{ $producto->user->addressUser->city->province }}";
-        var postalCode = "{{ $producto->user->addressUser->cp }}";
+        var address = "{{ $producto->seller->user->addressUser->address }}";
+        var city = "{{ $producto->seller->user->addressUser->city->name }}";
+        var postalCode = "{{ $producto->seller->user->addressUser->cp }}";
 
         var fullAddress = address + ", " + city + ", " + postalCode;
 

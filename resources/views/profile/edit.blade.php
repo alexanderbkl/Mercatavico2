@@ -101,7 +101,7 @@
                                                         @foreach ($ciudades as $ciudad)
                                                             <option value="{{ $ciudad->id }}"
                                                                 @if (Auth::user()->addressUser && Auth::user()->addressUser->city_id == $ciudad->id) selected @endif>
-                                                                {{ $ciudad->province }}</option>
+                                                                {{ $ciudad->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

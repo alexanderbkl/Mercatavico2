@@ -28,9 +28,10 @@ class User extends Authenticatable
         return $this->belongsTo(Address::class, 'address_id');
     }
 
-    public function productos(){
-        return $this->hasMany(Product::class,'user_id','id');
+    public function seller(){
+        return $this->hasOne(Seller::class, 'user_id', 'id');
     }
+
 
     public function getRolAttribute($value)
 {
@@ -45,16 +46,13 @@ class User extends Authenticatable
         return $this->hasOne(Buyer::class, 'user_id', 'id');
     }
 
-    public function seller(){
-        return $this->hasOne(Seller::class, 'user_id', 'id');
-    }
 
     public function orderDetails($orders) {
         $orderDetails = [];
         foreach ($orders as $order) {
             $orderDetails[] = $order->orderDetails;
         }
-        return $this->hasMany(OrderDetail::class, 'user_id', 'id');
+        return $this->hasMany(OrderDetail::class, 'user_id', 'user_id');
     }
 
 

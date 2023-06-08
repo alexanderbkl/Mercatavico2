@@ -14,7 +14,7 @@
                 @foreach ($order->orderDetails as $orderDetail)
                     <tr>
                         <td>{{ $orderDetail->order_id }}</td>
-                        <td>{{ $orderDetail->product->user->name }}</td>
+                        <td>{{ $orderDetail->product->seller->user->name }}</td>
                         <td>{{ $orderDetail->quantity }}</td>
                         <td>
                             <form class="calificacionForm" id="calificacionForm_{{ $orderDetail->id }}">
@@ -22,7 +22,7 @@
                                     <input type="hidden" class="form-control" name="bought_product_id"
                                         value="{{ $orderDetail->id }}">
                                     <input type="hidden" class="form-control" name="seller_id"
-                                        value="{{ $orderDetail->product->user->id }}">
+                                        value="{{ $orderDetail->product->seller->user->id }}">
 
                                     <input id="radio1_{{ $orderDetail->id }}" type="radio" name="calification"
                                         @if ($orderDetail->calification == 5) checked @endif value="5">

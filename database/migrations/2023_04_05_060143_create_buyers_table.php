@@ -16,10 +16,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('buyers', function (Blueprint $table) {
-          $table->id();
 		  $table->enum('shipping_preferences', ['Mañana', 'Tarde']);
           $table->enum('fav_pay', ['paypal', 'tarjeta']);
-          $table->unsignedBigInteger('user_id');
+          $table->unsignedBigInteger('user_id')->primary();
           $table->foreign('user_id')->references('id')->on('users');
           $table->timestamps();
         });

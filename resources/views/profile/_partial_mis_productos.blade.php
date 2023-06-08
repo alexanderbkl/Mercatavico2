@@ -27,7 +27,7 @@
                     <td>{{ $producto->price }}€</td>
                     <td>{{ $producto->stock }} unidades</td>
                     <td>{{ $producto->status }}</td>
-                    <td>{{ $producto->user->name . ' - ' . $producto->user->email }}</td>
+                    <td>{{ $producto->seller->user->name . ' - ' . $producto->seller->user->email }}</td>
                     <td>
                         @if ($producto->materiales)
                             <ul>

@@ -25,7 +25,7 @@
                     <td>{{ $usuario->credits }}</td>
                     <td>{{ $usuario->rol->name }}</td>
                     <td>{{ $usuario->addressUser ? $usuario->addressUser->address : '' }}</td>
-                    <td>{{ $usuario->addressUser ? $usuario->addressUser->city->province : '' }}</td>
+                    <td>{{ $usuario->addressUser ? $usuario->addressUser->city->name : '' }}</td>
                     <td>{{ $usuario->addressUser ? $usuario->addressUser->cp : '' }}</td>
                     <td>
                         @if ($usuario->id != \Illuminate\Support\Facades\Auth::id())
@@ -122,7 +122,7 @@
                                     @foreach (\App\Models\City::all() as $ciudad)
                                         <option value="{{ $ciudad->id }}"
                                             @if ($usuario->addressUser && $usuario->addressUser->city->id == $ciudad->id) selected @endif>
-                                            {{ $ciudad->province }}</option>
+                                            {{ $ciudad->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

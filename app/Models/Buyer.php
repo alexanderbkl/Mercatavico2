@@ -22,6 +22,8 @@ class Buyer extends Model
      * @var array
      */
     protected $fillable = ['shipping_preferences', 'fav_pay', 'user_id'];
+    protected $primaryKey = 'user_id';
+
 
     /**
      * The user that the buyer belongs to.

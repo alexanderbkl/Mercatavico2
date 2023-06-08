@@ -122,7 +122,7 @@
                         description: response.description,
                         foto: response.foto,
                         status: response.status,
-                        user_id: response.user_id,
+                        seller_id: response.seller_id,
                         created_at: response.created_at,
                         updated_at: response.updated_at,
                         quantity: 1

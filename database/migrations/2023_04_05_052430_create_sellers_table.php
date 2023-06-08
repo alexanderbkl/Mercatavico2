@@ -15,11 +15,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('sellers', function (Blueprint $table) {
-          $table->id();
           $table->float('cred_total', 8, 2);
           $table->boolean('payback');
           $table->enum('calificate', ['muy malo', 'malo', 'bueno', 'muy bueno'])->default('bueno');
-          $table->unsignedBigInteger('user_id');
+          $table->unsignedBigInteger('user_id')->primary();
           $table->foreign('user_id')->references('id')->on('users');
           $table->timestamps();
         });

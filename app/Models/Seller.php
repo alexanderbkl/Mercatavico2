@@ -12,10 +12,16 @@ class Seller extends Model
 
     protected $table = "sellers";
 
+    protected $primaryKey = 'user_id';
+
     protected $fillable = ['cred_total', 'payback', 'calificate', 'user_id'];
 
     public function user(){
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function productos(){
+        return $this->hasMany(Product::class,'seller_id','user_id');
     }
 
 
@@ -57,5 +63,7 @@ class Seller extends Model
 
         }
     }
+
+
 
 }

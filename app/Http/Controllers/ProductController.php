@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MaterialIntermediate;
 use App\Models\Product;
+use App\Models\Seller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,7 @@ class ProductController extends Controller
         $output->writeln($request->status);
 
         $product = Product::create([
-            'user_id'=>Auth::id(),
+            'seller_id'=>Auth::id(),
             'foto'=>$path,
             'title'=>$request->title,
             'description'=>$request->descripcion,
@@ -65,7 +66,7 @@ class ProductController extends Controller
             }
         }
 
-        $userProducts = User::find(Auth::id())->productos;
+        $userProducts = User::find(Auth::id())->seller->productos;
         $html = view('profile._partial_mis_productos',compact('userProducts'))->render();
 
         return response()->json(['message'=>'Producto creado correctamente.','view'=>$html]);
@@ -98,7 +99,7 @@ class ProductController extends Controller
         }
 
         $product = Product::find($request->product_id);
-        if($product->user_id==Auth::id() || Auth::user()->rol->name=='administrador'){
+        if($product->seller_id==Auth::id() || Auth::user()->rol->name=='administrador'){
             if($request->file('foto')){
                 $path=Str::random(15).time().$request->file('foto')->getClientOriginalExtension();
                 Storage::putFileAs('public/productsImages', $request->file('foto'),$path);
@@ -133,7 +134,7 @@ class ProductController extends Controller
             $product->price = $request->price;
             $product->stock = $request->stock;
             $product->status = $status;
-            $product->user_id = Auth::id();
+            $product->seller_id = Auth::id();
             $output->writeln(Auth::id());
             try {
                 $product->save();
@@ -143,7 +144,7 @@ class ProductController extends Controller
             if(Auth::user()->rol->name=='administrador'){
                 $userProducts = Product::all();
             }else{
-                $userProducts = User::find(Auth::id())->productos;
+                $userProducts = Seller::where('user_id', Auth::id())->first()->productos;
             }
             $html = view('profile._partial_mis_productos',compact('userProducts'))->render();
             return response()->json(['message'=>'Producto actualizado correctamente.','view'=>$html]);
@@ -155,12 +156,12 @@ class ProductController extends Controller
 
     public function destroy(Request $request){
         $product = Product::find($request->product_id);
-        if($product->user_id==Auth::id() || Auth::user()->rol->name=='administrador'){
+        if($product->seller_id==Auth::id() || Auth::user()->rol->name=='administrador'){
             $product->delete();
             if(Auth::user()->rol->name=='administrador'){
                 $userProducts = Product::all();
             }else{
-                $userProducts = User::find(Auth::id())->productos;
+                $userProducts = Seller::find(Auth::id())->productos;
             }
             $html = view('profile._partial_mis_productos',compact('userProducts'))->render();
 

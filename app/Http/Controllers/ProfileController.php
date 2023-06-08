@@ -37,7 +37,7 @@ class ProfileController extends Controller
             $orders = Order::all();
 
         }else{
-            $userProducts = Auth::user()->productos;
+            $userProducts = Auth::user()->seller->productos;
             $orders = Auth::user()->orders;
         }
         $usuarios =User::all();

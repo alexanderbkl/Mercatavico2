@@ -53,7 +53,7 @@ class PayPalCardController extends Controller
         $encodedCartItems = $request->input('cart');
         $decodedCartItems = urldecode($encodedCartItems);
         $cartItems = json_decode($decodedCartItems, true);
-        //cartItems looks like {"1":{"id":1,"title":"product1","price":"10.00","stock":10,"description":"description1","foto":"Z2PIAt3yqKtm3fs1678866576jpg","status":"Nuevo","user_id":1,"created_at":"2023-06-04T01:13:46.000000Z","updated_at":"2023-06-04T01:13:46.000000Z","quantity":10}}
+        //cartItems looks like {"1":{"id":1,"title":"product1","price":"10.00","stock":10,"description":"description1","foto":"Z2PIAt3yqKtm3fs1678866576jpg","status":"Nuevo","seller_id":1,"created_at":"2023-06-04T01:13:46.000000Z","updated_at":"2023-06-04T01:13:46.000000Z","quantity":10}}
 
             $output->writeln(json_encode($cartItems));
 
@@ -110,8 +110,8 @@ class PayPalCardController extends Controller
                         'price' => $item['price'],
                     ]);
 
-                    if (User::find($item['user_id'])->rol->name == "miembro") {
-                        $user = User::find($item['user_id']);
+                    if (User::find($item['seller_id'])->rol->name == "miembro") {
+                        $user = User::find($item['seller_id']);
                         $user->credits += ($item['price'] * $item['quantity']);
                         $user->save();
                     }
@@ -213,10 +213,14 @@ class PayPalCardController extends Controller
                         'quantity' => $item['quantity'],
                         'price' => $item['price'],
                     ]);
+                    $otuput = new ConsoleOutput();
+                    //for each key in item, print the value
+                    foreach ($item as $key => $value) {
+                        $otuput->writeln($key . " => " . $value);
+                    }
 
-
-                    if (User::find($item['user_id'])->rol->name == "miembro") {
-                        $user = User::find($item['user_id']);
+                    if (User::find($item['seller_id'])->rol->name == "miembro") {
+                        $user = User::find($item['seller_id']);
                         $user->credits += ($item['price'] * $item['quantity']);
                         //sum to user seller cred_total the price of the product multiplied by the quantity
                         $output = new ConsoleOutput();

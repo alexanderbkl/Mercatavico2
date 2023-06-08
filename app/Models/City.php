@@ -10,6 +10,6 @@ class City extends Model
     protected $table ='cities';
     use HasFactory;
     protected $fillable = [
-        'province',
+        'name',
     ];
 }

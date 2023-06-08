@@ -22,10 +22,9 @@ return new class extends Migration
           $table->string('description', 128);
           $table->string('foto', 63);
           $table->enum('status', ['Nuevo', 'Usado', 'Estropeado']);
-          $table->unsignedBigInteger('user_id');
+          $table->unsignedBigInteger('seller_id');
+          $table->foreign('seller_id')->references('user_id')->on('sellers');
           $table->timestamps();
-
-          $table->foreign('user_id')->references('user_id')->on('sellers');
         });
 
         //create product with price 10, title product1, stock 10, description description1, etc
@@ -37,7 +36,7 @@ return new class extends Migration
             'description'=>'description1',
             'foto'=>'Z2PIAt3yqKtm3fs1678866576jpg',
             'status'=>'Nuevo',
-            'user_id'=>1,
+            'seller_id'=>1,
         ]);
 
         $product2 = Product::create([
@@ -47,7 +46,7 @@ return new class extends Migration
             'description'=>'description2',
             'foto'=>'Z2PIAt3yqKtm3fs1678866576jpg',
             'status'=>'Usado',
-            'user_id'=>2,
+            'seller_id'=>2,
         ]);
 
         $product3 = Product::create([
@@ -57,7 +56,7 @@ return new class extends Migration
             'description'=>'description3',
             'foto'=>'Z2PIAt3yqKtm3fs1678866576jpg',
             'status'=>'Estropeado',
-            'user_id'=>3,
+            'seller_id'=>3,
         ]);
 
 

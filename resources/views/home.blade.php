@@ -37,7 +37,7 @@
                         <div class="card-footer" style="text-align: center">
                             <a class="btn btn-success" href="{{ route('product.show', $producto->id) }}">Ver producto</a>
                             @auth
-                                @if ($producto->user->id != \Illuminate\Support\Facades\Auth::id())
+                                @if ($producto->seller->user->id != \Illuminate\Support\Facades\Auth::id())
                                     <button type="button" data-product_id="{{ $producto->id }}"
                                         class="btn btn-primary addCartBtn"><i class="fa fa-plus"></i> Añadir al
                                         carrito</button>
@@ -116,7 +116,7 @@
                             "description": "description1",
                             "foto": "Z2PIAt3yqKtm3fs1678866576jpg",
                             "status": "Nuevo",
-                            "user_id": 1,
+                            "seller_id": 1,
                             "created_at": "2023-06-04T01:13:46.000000Z",
                             "updated_at": "2023-06-04T01:13:46.000000Z"
                         }
@@ -129,7 +129,7 @@
                         description: response.description,
                         foto: response.foto,
                         status: response.status,
-                        user_id: response.user_id,
+                        seller_id: response.seller_id,
                         created_at: response.created_at,
                         updated_at: response.updated_at,
                         quantity: 1

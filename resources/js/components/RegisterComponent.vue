@@ -32,7 +32,7 @@
                 :key="city.id"
                 :value="city.id"
             >
-                {{ city.province }}
+                {{ city.name }}
             </option>
         </select>
         <ul v-if="cityError" class="errors">

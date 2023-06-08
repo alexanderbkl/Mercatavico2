@@ -17,7 +17,7 @@
             <div class="card-footer" style="text-align: center">
                 <a class="btn btn-success" href="{{ route('product.show', $producto->id) }}">Ver producto</a>
                 @auth
-                    @if ($producto->user->id != \Illuminate\Support\Facades\Auth::id())
+                    @if ($producto->seller->user->id != \Illuminate\Support\Facades\Auth::id())
                         <button type="button" class="btn btn-primary addCartBtn" data-product_id="{{ $producto->id }}"><i
                                 class="fa fa-plus"></i> Añadir al carrito</button>
                     @endif
