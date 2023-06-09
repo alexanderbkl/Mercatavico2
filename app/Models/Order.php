@@ -9,9 +9,9 @@ class Order extends Model
 {
     use HasFactory;
     protected $table = "orders";
-    protected $fillable = ['total','user_id','pay','transaction','payment_id', 'date'];
+    protected $fillable = ['total','buyer_id','pay','transaction','payment_id', 'date'];
     public function user(){
-        return $this->belongsTo(User::class,'user_id','id');
+        return $this->belongsTo(User::class,'buyer_id','id');
     }
 
     public function orderDetails() {

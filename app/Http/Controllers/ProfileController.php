@@ -38,7 +38,7 @@ class ProfileController extends Controller
 
         }else{
             $userProducts = Auth::user()->seller->productos;
-            $orders = Auth::user()->orders;
+            $orders = Auth::user()->buyer->orders;
         }
         $usuarios =User::all();
         $materiales =Material::all();

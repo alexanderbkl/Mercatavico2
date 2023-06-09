@@ -32,4 +32,8 @@ class Buyer extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function orders(){
+        return $this->hasMany(Order::class,'buyer_id','user_id');
+    }
 }

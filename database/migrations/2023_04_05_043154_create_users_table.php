@@ -25,7 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('address_id')->nullable();
             $table->foreign('address_id')->references('id')->on('addresses');
             $table->timestamps();
-          });
+        });
 
 
         //create user with name user1, email user1@mail.com, password 12345678, etc
@@ -35,6 +35,7 @@ return new class extends Migration
             'password'=>Hash::make('12345678'),
             'rol'=>1,
             'address_id'=>1,
+            'credits'=> '100.00',
         ]);
 
         $user2 = User::create([

@@ -22,15 +22,20 @@ class User extends Authenticatable
 
     protected $fillable = ['name','email','credits','rol','password', 'address_id'];
 
+    public function buyer(){
+        return $this->hasOne(Buyer::class, 'user_id', 'id');
+    }
+    public function seller(){
+        return $this->hasOne(Seller::class, 'user_id', 'id');
+    }
+
+
     public function addressUser(){
         $output = new ConsoleOutput();
         $output->writeln("entered addressUser");
         return $this->belongsTo(Address::class, 'address_id');
     }
 
-    public function seller(){
-        return $this->hasOne(Seller::class, 'user_id', 'id');
-    }
 
 
     public function getRolAttribute($value)
@@ -38,13 +43,9 @@ class User extends Authenticatable
     return (object) ['name' => $value];
 }
 
-    public function orders(){
-        return $this->hasMany(Order::class,'user_id','id');
-    }
 
-    public function buyer(){
-        return $this->hasOne(Buyer::class, 'user_id', 'id');
-    }
+
+
 
 
     public function orderDetails($orders) {

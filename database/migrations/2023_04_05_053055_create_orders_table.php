@@ -19,8 +19,8 @@ return new class extends Migration
           $table->string('transaction', 512)->nullable();
           $table->decimal('total',8,2)->nullable(false);
           $table->boolean('pay')->default(false);
-          $table->unsignedBigInteger('user_id');
-          $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('cascade');
+          $table->unsignedBigInteger('buyer_id');
+          $table->foreign('buyer_id')->references('user_id')->on('buyers')->onDelete('restrict')->onUpdate('cascade');
           $table->unsignedInteger('payment_id')->nullable(); //removed second parameter from unsignedInteger
           $table->foreign('payment_id')->references('id')->on('payments')->onDelete('restrict')->onUpdate('cascade');
           $table->enum('currency', ['EUR', 'USD']);
@@ -35,7 +35,7 @@ return new class extends Migration
             'transaction'=>'transaction1',
             'total'=>10,
             'pay'=>true,
-            'user_id'=>1,
+            'buyer_id'=>1,
             'payment_id'=>1,
             'currency'=>'EUR',
             'date'=>'2021-04-05 05:32:55',

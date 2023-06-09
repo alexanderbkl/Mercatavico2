@@ -83,7 +83,7 @@ class PayPalCardController extends Controller
 
             if($finalAmount==0){
                 $order = Order::create([
-                    'user_id' => Auth::id(),
+                    'buyer_id' => Auth::id(),
                     'transaction' => null,
                     'total' => $finalAmount,
                     'pay' => 1,
@@ -180,7 +180,7 @@ class PayPalCardController extends Controller
                 ]);
 
                 $order = Order::create([
-                    'user_id' => Auth::id(),
+                    'buyer_id' => Auth::id(),
                     'transaction' => $payment->payment_id,
                     'total' => $payment->amount,
                     'currency' => $payment->currency,
