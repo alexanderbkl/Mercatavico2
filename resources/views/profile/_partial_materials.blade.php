@@ -135,6 +135,7 @@
             success: function(data) {
                 $(".modal-backdrop").remove(); // hide the overlay
                 $('#contentMaterials').html(data.view)
+                $('body').removeClass("modal-open");
                 toastr.success(data.message);
             },
             error: function(error) {
