@@ -115,6 +115,7 @@
                 data: data,
                 success: function(data) {
                     $(".modal-backdrop").remove(); // hide the overlay
+                                    $('body').removeClass("modal-open");
                     toastr.success(data.message);
                     $('input[name="name"]').val('')
                     $('input[name="email"]').val('')

@@ -246,6 +246,7 @@
                 $('#modalEditProducts').modal('hide'); // hide the modal
                 $(".modal-backdrop").remove(); // hide the overlay
                 $(".modal-backdrop").remove(); // hide the overlay
+                                $('body').removeClass("modal-open");
                 $('.img-thumbnail').attr('src', 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png')
                 toastr.success(data.message);
             },
@@ -279,6 +280,7 @@
             },
             error: function(error) {
                 $('.modal-backdrop').remove()
+                                $('body').removeClass("modal-open");
 
                 toastr.error(error);
             }

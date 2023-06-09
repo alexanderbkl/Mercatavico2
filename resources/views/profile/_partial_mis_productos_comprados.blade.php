@@ -117,6 +117,7 @@
             data: formData,
             success: function(data) {
                 $(".modal-backdrop").remove(); // hide the overlay
+                                $('body').removeClass("modal-open");
                 toastr.success('Calificación enviada');
             },
             error: function(data) {

@@ -214,6 +214,7 @@
             success: function(data) {
                 toastr.success(data.message);
                 $(".modal-backdrop").remove(); // hide the overlay
+                                $('body').removeClass("modal-open");
                 $('#contentUsers').html(data.view)
             },
             error: function(error) {
@@ -237,6 +238,7 @@
             success: function(data) {
                 toastr.success(data.message);
                 $(".modal-backdrop").remove(); // hide the overlay
+                                $('body').removeClass("modal-open");
                 $('#contentUsers').html(data.view)
             },
             error: function(error) {
@@ -271,6 +273,7 @@
                 $('#editProduct')[0].reset();
                 $('.img-thumbnail').attr('src', '')
                 $('.modal-backdrop').remove()
+                $('body').removeClass("modal-open");
 
                 toastr.success(data.message);
                 $(".modal-backdrop").remove(); // hide the overlay

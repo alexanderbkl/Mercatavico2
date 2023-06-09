@@ -136,6 +136,7 @@
 
         function displayNotification(message) {
             $(".modal-backdrop").remove(); // hide the overlay
+                            $('body').removeClass("modal-open");
             toastr.success(message);
         }
 
