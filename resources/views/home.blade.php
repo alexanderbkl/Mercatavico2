@@ -89,6 +89,10 @@
             $('.addCartBtn').click(function(e) {
                 e.preventDefault();
 
+                if ($(this).hasClass('disabled')) {
+                    return;
+                }
+
                 var product_id = $(this).data('product_id');
 
                 addToCart(product_id);
