@@ -154,13 +154,13 @@ class ProfileController extends Controller
                     // First update the BoughtProduct
                     $orderDetail = OrderDetail::findOrFail($validatedData['bought_product_id']);
                     $output->writeln("orderDetail: " . $orderDetail);
-                    $output->writeln("calification: " . $validatedData['calification']);
+                    $output->writeln("Buyer calification: " . $validatedData['calification']);
                     $orderDetail->calification = $validatedData['calification'];
                     $orderDetail->save();
                     try {
                         // Then calculate the average calification of the seller and update the seller
                         $seller = Seller::where('user_id', $validatedData['seller_id'])->first();
-                        $averageCalification = $seller->averageCalification($validatedData['bought_product_id']);
+                        $averageCalification = $seller->averageCalification();
                         $seller->calificate = $averageCalification;
                         $seller->save();
                     } catch (Exception $e) {

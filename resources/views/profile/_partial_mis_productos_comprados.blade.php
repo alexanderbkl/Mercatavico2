@@ -25,23 +25,28 @@
                                         value="{{ $orderDetail->product->seller->user->id }}">
 
                                     <input id="radio1_{{ $orderDetail->id }}" type="radio" name="calification"
-                                        @if ($orderDetail->calification == 5) checked @endif value="5">
+                                        @if ($orderDetail->calification == 5) checked @endif
+                                            @if (\Illuminate\Support\Facades\Auth::user()->rol->name == 'administrador') disabled @endif value="5">
                                     <label for="radio1_{{ $orderDetail->id }}">★</label>
 
                                     <input id="radio2_{{ $orderDetail->id }}" type="radio" name="calification"
-                                        @if ($orderDetail->calification == 4) checked @endif value="4">
+                                        @if ($orderDetail->calification == 4) checked @endif
+                                                                                    @if (\Illuminate\Support\Facades\Auth::user()->rol->name == 'administrador') disabled @endif value="4">
                                     <label for="radio2_{{ $orderDetail->id }}">★</label>
 
                                     <input id="radio3_{{ $orderDetail->id }}" type="radio" name="calification"
-                                        @if ($orderDetail->calification == 3) checked @endif value="3">
+                                        @if ($orderDetail->calification == 3) checked @endif
+                                                                                    @if (\Illuminate\Support\Facades\Auth::user()->rol->name == 'administrador') disabled @endif value="3">
                                     <label for="radio3_{{ $orderDetail->id }}">★</label>
 
                                     <input id="radio4_{{ $orderDetail->id }}" type="radio" name="calification"
-                                        @if ($orderDetail->calification == 2) checked @endif value="2">
+                                        @if ($orderDetail->calification == 2) checked @endif
+                                                                                    @if (\Illuminate\Support\Facades\Auth::user()->rol->name == 'administrador') disabled @endif value="2">
                                     <label for="radio4_{{ $orderDetail->id }}">★</label>
 
                                     <input id="radio5_{{ $orderDetail->id }}" type="radio" name="calification"
-                                        @if ($orderDetail->calification == 1) checked @endif value="1">
+                                        @if ($orderDetail->calification == 1) checked @endif
+                                                                                    @if (\Illuminate\Support\Facades\Auth::user()->rol->name == 'administrador') disabled @endif value="1">
                                     <label for="radio5_{{ $orderDetail->id }}">★</label>
                                 </p>
                                 <button type="submit" id="submit_{{ $orderDetail->id }}"
@@ -98,35 +103,40 @@
 
 <script>
     $('input[type="radio"]').on('click', function(e) {
+        if ("{{ \Illuminate\Support\Facades\Auth::user()->rol->name }}" == 'administrador') {
+            e.preventDefault();
+            return;
+        }
         $(this).closest('form').find('button[type="submit"]').click();
     });
-
     $('.calificacionForm').on('submit', function(e) {
         e.preventDefault();
         var formData = new FormData(this);
 
 
 
+        @if (\Illuminate\Support\Facades\Auth::user()->rol->name != 'administrador')
+            $.ajax({
+                url: "{{ route('add.calification') }}",
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: formData,
+                success: function(data) {
+                    $(".modal-backdrop").remove(); // hide the overlay
+                    $('body').removeClass("modal-open");
+                    toastr.success('Calificación enviada');
+                },
+                error: function(data) {
+                    toastr.error('Error al enviar la calificación: ' + data.responseText);
+                    console.log(data.responseText)
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        @endif
 
-        $.ajax({
-            url: "{{ route('add.calification') }}",
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: formData,
-            success: function(data) {
-                $(".modal-backdrop").remove(); // hide the overlay
-                                $('body').removeClass("modal-open");
-                toastr.success('Calificación enviada');
-            },
-            error: function(data) {
-                toastr.error('Error al enviar la calificación: ' + data.responseText);
-                console.log(data.responseText)
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-        });
     });
 </script>

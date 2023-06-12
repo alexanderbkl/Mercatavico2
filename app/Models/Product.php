@@ -17,4 +17,6 @@ class Product extends Model
         return $this->belongsTo(Seller::class,'seller_id','user_id');
     }
 
+
+
 }
